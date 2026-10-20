@@ -1,0 +1,5 @@
+BOUTIQUE ORNELIA
+1. Installer Python 3.9+ (rien d autre).
+2. Dans ce dossier : python3 server.py
+3. Boutique : http://localhost:8000   Admin : http://localhost:8000/admin
+Sauvegarde : copier boutique.db et le dossier uploads/.

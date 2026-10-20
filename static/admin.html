@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Administration</title>
+<style>
+:root{--bg:#fff1f4;--card:#fffafb;--tx:#3b1d27;--mu:#8c6671;--ac:#d6457a;--ln:#f2c9d5}
+*{box-sizing:border-box;margin:0}body{font:16px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+button,input,select,textarea{font:inherit;color:inherit}.btn{background:var(--ac);color:#fff;border:0;padding:.6em 1.1em;border-radius:99px;cursor:pointer;font-weight:600}
+.btn.o{background:none;border:1px solid var(--ac);color:var(--ac)}.btn.s{padding:.25em .8em;font-size:.85em}
+nav{display:flex;gap:.4em;flex-wrap:wrap;padding:.8em 4%;background:var(--card);border-bottom:1px solid var(--ln);position:sticky;top:0}
+nav b{margin-right:auto;font-size:1.2em}nav button.on{background:var(--ac);color:#fff}nav button{background:none;border:1px solid var(--ln);padding:.4em 1em;border-radius:99px;cursor:pointer}
+main{max-width:900px;margin:auto;padding:1.2em 4%}.c{background:var(--card);border:1px solid var(--ln);border-radius:16px;padding:1em;margin:.8em 0}
+.f{display:grid;gap:.5em}.f input,.f select,.f textarea{padding:.6em;border:1px solid var(--ln);border-radius:10px;background:#fff}
+.ims{display:flex;gap:.4em;flex-wrap:wrap}.ims div{position:relative}.ims img{width:64px;height:64px;object-fit:cover;border-radius:8px}.ims b{position:absolute;top:-6px;right:-6px;background:#c00;color:#fff;border-radius:50%;width:20px;height:20px;text-align:center;cursor:pointer;font-size:.8em}
+.row{display:flex;justify-content:space-between;align-items:center;gap:.6em;flex-wrap:wrap}small{color:var(--mu)}.st{padding:.1em .7em;border-radius:9px;background:var(--ln);font-size:.85em}
+h3{margin:.2em 0 .5em}.hint{background:#fff;border-left:4px solid var(--ac);padding:.5em .8em;border-radius:6px;font-size:.9em;margin:.5em 0}
+</style></head><body>
+<div id="lg" style="max-width:340px;margin:20vh auto;padding:1em"><h2>Espace vendeuse</h2><div class="f" style="margin-top:1em"><input id="pw" type="password" placeholder="Mot de passe" onkeydown="event.key=='Enter'&&go()"><button class="btn" onclick="go()">Entrer</button></div></div>
+<div id="app" hidden><nav><b>Administration</b><button onclick="tab('o')" id="to">Commandes</button><button onclick="tab('p')" id="tp">Articles</button><button onclick="tab('s')" id="ts">Ma boutique</button><button onclick="tab('v')" id="tv">Visites</button><button onclick="tab('x')" id="tx">Sécurité</button><a href="/" target="_blank"><button>Voir le site</button></a></nav><main id="mn"></main></div>
+<script>
+let D,T="o",$=i=>document.getElementById(i);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const api=async(p,b)=>{const r=await fetch("/api/admin/"+p,b?{method:"POST",body:JSON.stringify(b)}:{});if(r.status==401){location.reload();return}const d=await r.json();if(!r.ok)alert(d.error);return d};
+async function go(){const r=await fetch("/api/login",{method:"POST",body:JSON.stringify({password:$("pw").value})});if(r.ok)load();else alert((await r.json()).error)}
+async function load(){D=await api("data");if(!D)return;$("lg").hidden=true;$("app").hidden=false;tab(T)}
+async function up(f){const r=await fetch("/api/admin/upload",{method:"POST",body:f});const d=await r.json();if(!r.ok){alert(d.error);return null}return d.url}
+function tab(t){T=t;["o","p","s","v","x"].forEach(k=>$("t"+k).classList.toggle("on",k==t));({o:ord,p:prd,s:shop,v:vis,x:sec})[t]()}
+const fm=n=>n.toLocaleString("fr-FR")+" "+D.settings.currency;
+function ord(){const l={"en attente":"Nouvelle commande","en livraison":"En livraison","livrée":"Livrée (vente confirmée)","annulée":"Annulée"};
+ $("mn").innerHTML=`<div class="hint">1. Nouvelle commande → appelez le client puis cliquez « Lancer la livraison ». 2. Le client reçoit le colis et saisit son code : la vente devient définitive et son reçu est créé.</div>`+(D.orders.map(o=>`<div class="c"><div class="row"><b>#${o.id} — ${esc(o.name)}</b><span class="st">${l[o.status]}</span></div>
+ <small>${esc(o.created)} · ${esc(o.phone)} · ${esc(o.address)}</small>${JSON.parse(o.items).map(i=>`<div>${esc(i.name)} × ${i.qty}</div>`).join("")}<div class="row"><b>${fm(o.total)}</b><small>Code client : ${esc(o.code)}</small>
+ <span>${o.status=="en attente"?`<button class="btn s" onclick="os(${o.id},'en livraison')">Lancer la livraison</button> `:""}${o.status=="en attente"||o.status=="en livraison"?`<button class="btn o s" onclick="os(${o.id},'annulée')">Annuler</button> <a href="https://wa.me/${esc(o.phone.replace(/\D/g,""))}" target="_blank"><button class="btn o s">WhatsApp</button></a>`:""}</span></div></div>`).join("")||"<p>Aucune commande pour l'instant.</p>")}
+async function os(id,status){await api("order",{id,status});D=await api("data");ord()}
+function prd(){$("mn").innerHTML=`<button class="btn" onclick="ed()">+ Nouvel article</button>`+D.products.map(p=>`<div class="c row"><span><img src="${esc(p.images[0]||"")}" width="48" height="48" style="border-radius:8px;object-fit:cover;vertical-align:middle"> <b>${esc(p.name)}</b> <small>${esc(p.cat)} · ${fm(p.price)} · stock ${p.stock}${p.visible?"":" · masqué"}</small></span><span><button class="btn o s" onclick="ed(${p.id})">Modifier</button></span></div>`).join("")}
+let cur;function ed(id){cur=id?{...D.products.find(p=>p.id==id)}:{name:"",cat:D.settings.cats[0],price:0,desc:"",images:[],videos:[],details:"",stock:1,visible:1};
+ $("mn").innerHTML=`<div class="c f"><h3>${id?"Modifier":"Nouvel"} article</h3><input id="a1" placeholder="Nom" value="${esc(cur.name)}"><select id="a2">${D.settings.cats.map(c=>`<option ${c==cur.cat?"selected":""}>${esc(c)}</option>`).join("")}</select>
+ <input id="a3" type="number" min="0" placeholder="Prix" value="${cur.price}"><input id="a4" type="number" min="0" placeholder="Quantité en stock" value="${cur.stock}"><textarea id="a5" rows="3" placeholder="Description">${esc(cur.desc)}</textarea>
+ <textarea id="a7" rows="5" placeholder="Détails, une ligne par caractéristique. Ex :&#10;Matière : plaqué or&#10;Taille : réglable&#10;Entretien : éviter l'eau">${esc(cur.details)}</textarea>
+ <label><input type="checkbox" id="a6" ${cur.visible?"checked":""}> Visible sur le site</label>
+ <div class="hint">Photos : Chaque photo est un angle de vue (face, côté, dos, détail). Ajoutez 3 à 12 photos, dans l'ordre en tournant autour de l'article : le client le fait tourner en 3D. Avec une seule photo, il s'incline simplement.</div>
+ <div class="ims" id="im"></div><input type="file" accept="image/*" multiple onchange="addi(this.files)">
+ <div class="hint">Vidéos de l'article (MP4 ou WEBM, 6 max).</div><div class="ims" id="vd"></div><input type="file" accept="video/mp4,video/webm" onchange="addv(this.files)">
+ <div class="row"><button class="btn" onclick="sp()">Enregistrer</button><button class="btn o" onclick="prd()">Retour</button>${id?`<button class="btn o" onclick="dl(${id})">Supprimer</button>`:""}</div></div>`;ri();rv()}
+function rv(){$("vd").innerHTML=cur.videos.map((u,i)=>`<div><video src="${esc(u)}" width="96" height="64" muted style="border-radius:8px;object-fit:cover"></video><b onclick="cur.videos.splice(${i},1);rv()">×</b></div>`).join("")}
+async function addv(fs){for(const f of fs){if(cur.videos.length>=6)break;const u=await up(f);if(u)cur.videos.push(u)}rv()}
+function ri(){$("im").innerHTML=cur.images.map((u,i)=>`<div><img src="${esc(u)}"><b onclick="cur.images.splice(${i},1);ri()">×</b></div>`).join("")}
+async function addi(fs){for(const f of fs){const u=await up(f);if(u)cur.images.push(u)}ri()}
+async function sp(){if(!$("a1").value.trim())return alert("Donnez un nom à l'article.");await api("product",{id:cur.id,name:$("a1").value,cat:$("a2").value,price:$("a3").value,stock:$("a4").value,desc:$("a5").value,visible:$("a6").checked,images:cur.images,videos:cur.videos,details:$("a7").value});D=await api("data");prd()}
+async function dl(id){if(confirm("Supprimer cet article ?")){await api("delete",{id});D=await api("data");prd()}}
+function shop(){const s=D.settings;$("mn").innerHTML=`<div class="c f"><h3>Informations</h3>${[["title","Nom de la boutique"],["tagline","Phrase d'accroche (page d'accueil)"],["footer","Phrase d'accroche du pied de page"],["whatsapp","WhatsApp (ex : 22965685659)"],["instagram","Instagram"],["tiktok","TikTok"]].map(([k,l])=>`<label><small>${l}</small><input id="s_${k}" value="${esc(s[k])}"></label>`).join("")}
+ <label><small>Catégories (séparées par une virgule)</small><input id="s_cats" value="${esc(s.cats.join(", "))}"></label></div>
+ <div class="c"><h3>Logos et photo d'ouverture</h3><div class="hint">À l'ouverture du site : logo d'ouverture, puis logo principal, puis la photo d'ouverture. Le logo principal est aussi dans la barre du haut et le pied de page. Conseil : image PNG à fond transparent.</div>${[["logo_intro","Logo d'ouverture (1er)"],["logo","Logo principal (barre du haut)"],["intro_photo","Photo d'ouverture"],["bg_logo","Logo du fond animé"]].map(([k,l])=>`<div class="row" style="margin:.5em 0"><span><img src="${esc(s[k])}" id="p_${k}" style="height:56px;width:70px;object-fit:contain;background:#222;border-radius:8px;vertical-align:middle"> ${l}</span><input type="file" accept="image/*" onchange="sone('${k}',this.files[0])"></div>`).join("")}</div>
+ <div class="c"><h3>Photos du fond animé (3 maximum)</h3><div class="hint">Le fond tourne en boucle de 10 s sur tout le site : ces photos, puis le logo du fond.</div><div class="ims" id="hi"></div><input type="file" accept="image/*" onchange="addh(this.files[0])"></div><button class="btn" onclick="ss()">Enregistrer</button>`;rh()}
+async function sone(k,f){if(!f)return;const u=await up(f);if(u){D.settings[k]=u;$("p_"+k).src=u}}
+function rh(){$("hi").innerHTML=D.settings.hero.map((u,i)=>`<div><img src="${esc(u)}"><b onclick="D.settings.hero.splice(${i},1);rh()">×</b></div>`).join("")}
+async function addh(f){if(!f||D.settings.hero.length>=3)return alert("3 photos maximum : retirez-en une d'abord.");const u=await up(f);if(u){D.settings.hero.push(u);rh()}}
+async function ss(){const b={hero:D.settings.hero,cats:$("s_cats").value.split(","),logo:D.settings.logo,logo_intro:D.settings.logo_intro,intro_photo:D.settings.intro_photo,bg_logo:D.settings.bg_logo};["title","tagline","footer","whatsapp","instagram","tiktok"].forEach(k=>b[k]=$("s_"+k).value);b.whatsapp=b.whatsapp.replace(/\D/g,"");await api("settings",b);D=await api("data");alert("Enregistré ✓")}
+function vis(){const v=D.visits,tot=v.reduce((a,b)=>a+b.n,0),sold=D.orders.filter(o=>o.status=="livrée"),ca=sold.reduce((a,o)=>a+o.total,0);
+ $("mn").innerHTML=`<div class="c row"><span><b>${tot}</b><br><small>visites (30 jours)</small></span><span><b>${sold.length}</b><br><small>ventes confirmées</small></span><span><b>${fm(ca)}</b><br><small>chiffre d'affaires</small></span></div><div class="c"><h3>Visites par jour</h3>${v.map(d=>`<div class="row"><small>${d.day}</small><div style="background:var(--ac);height:10px;border-radius:5px;width:${Math.max(3,d.n/Math.max(...v.map(x=>x.n))*70)}%"></div><b>${d.n}</b></div>`).join("")}</div>`}
+function sec(){$("mn").innerHTML=`<div class="c f"><h3>Changer le mot de passe</h3><input id="np" type="password" placeholder="Nouveau mot de passe (8 caractères min.)"><button class="btn" onclick="pwd()">Changer</button></div>`}
+async function pwd(){const r=await api("password",{password:$("np").value});if(r&&r.ok){alert("Mot de passe changé ✓");$("np").value=""}}
+</script></body></html>
