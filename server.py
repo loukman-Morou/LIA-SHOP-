@@ -35,7 +35,7 @@ def init():
         c.execute("UPDATE settings SET v='LIA SHOP' WHERE k='title'"); c.execute("REPLACE INTO settings VALUES('hero',?)", (json.dumps(["/static/img/h2.jpg", "/static/img/h3.jpg"]),))
     c.commit()
     if not c.execute("SELECT 1 FROM settings").fetchone():
-        pw = secrets.token_urlsafe(8)
+        pw = "LiaShop2026!"
         S = {"admin": hpw(pw), "title": "LIA SHOP", "tagline": "Bijoux, parfums & tenues cousues main",
              "whatsapp": "22965685659", "instagram": "01_ornelia", "tiktok": "01_ornelia",
              "hero": json.dumps(["/static/img/h2.jpg", "/static/img/h3.jpg"]),
@@ -54,12 +54,6 @@ def init():
                       (n, ca, p, d, json.dumps([f"/static/img/{im}.jpg"])))
         c.commit()
         print("\n=== PREMIER LANCEMENT ===\nMot de passe admin : %s\n(changez-le dans Admin > Sécurité)\n" % pw)
-    # --- BLOC TEMPORAIRE : force l'affichage du mot de passe admin à chaque démarrage ---
-    _pw_force = secrets.token_urlsafe(8)
-    c.execute("REPLACE INTO settings VALUES('admin',?)", (hpw(_pw_force),))
-    c.commit()
-    print("\n=== MOT DE PASSE ADMIN (FORCÉ) ===\n%s\n(changez-le dans Admin > Sécurité)\n" % _pw_force)
-    # --- FIN BLOC TEMPORAIRE ---
     c.close()
 
 def setting(c, k): 
