@@ -54,6 +54,12 @@ def init():
                       (n, ca, p, d, json.dumps([f"/static/img/{im}.jpg"])))
         c.commit()
         print("\n=== PREMIER LANCEMENT ===\nMot de passe admin : %s\n(changez-le dans Admin > Sécurité)\n" % pw)
+    # --- BLOC TEMPORAIRE : force l'affichage du mot de passe admin à chaque démarrage ---
+    _pw_force = secrets.token_urlsafe(8)
+    c.execute("REPLACE INTO settings VALUES('admin',?)", (hpw(_pw_force),))
+    c.commit()
+    print("\n=== MOT DE PASSE ADMIN (FORCÉ) ===\n%s\n(changez-le dans Admin > Sécurité)\n" % _pw_force)
+    # --- FIN BLOC TEMPORAIRE ---
     c.close()
 
 def setting(c, k): 
