@@ -1,2 +1,4 @@
+.env
 boutique.db
 uploads/
+__pycache__/

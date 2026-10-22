@@ -1,5 +1,138 @@
-BOUTIQUE ORNELIA
-1. Installer Python 3.9+ (rien d autre).
-2. Dans ce dossier : python3 server.py
-3. Boutique : http://localhost:8000   Admin : http://localhost:8000/admin
-Sauvegarde : copier boutique.db et le dossier uploads/.
+=====================================================================
+ LIA SHOP - GUIDE COMPLET (test en local, puis mise en ligne sur Render)
+=====================================================================
+
+CE QUE FAIT LE SITE
+- Boutique avec admin (/admin), base de données persistante (Postgres),
+  photos et vidéos stockées chez Supabase, paiement à la livraison avec code de
+  réception, reçu, statistiques.
+- Le mot de passe admin n'est JAMAIS généré par le site : c'est vous qui le
+  choisissez (variable ADMIN_PASSWORD).
+
+---------------------------------------------------------------------
+PARTIE 1 - TESTER SUR VOTRE PC (Windows)
+---------------------------------------------------------------------
+1. Installez Python 3.9 ou plus récent depuis python.org/downloads.
+   Dans l'installateur, COCHEZ « Add python.exe to PATH ».
+2. Dans le dossier du site, copiez le fichier ".env.example" et renommez la
+   copie en ".env". Ouvrez-la avec le Bloc-notes et changez la ligne
+   ADMIN_PASSWORD=... par votre mot de passe (10 caractères minimum).
+3. Ouvrez PowerShell dans ce dossier et tapez :   python server.py
+4. Boutique : http://localhost:8000        Admin : http://localhost:8000/admin
+   (En local, les données sont dans boutique.db et le dossier uploads/.)
+
+---------------------------------------------------------------------
+PARTIE 2 - MISE EN LIGNE : 3 COMPTES GRATUITS À CRÉER
+---------------------------------------------------------------------
+ Supabase (base de données + photos/vidéos), GitHub (le code), Render (le site).
+ Les noms des menus peuvent légèrement changer : cherchez le mot indiqué.
+
+=== ÉTAPE A - SUPABASE (supabase.com) ===
+A1. Créez un compte puis « New project ». Donnez un nom (ex : lia-shop).
+    Choisissez une région proche (ex : Europe de l'Ouest).
+    À « Database password », tapez un mot de passe en LETTRES ET CHIFFRES
+    seulement (pas de @ : / ? # %). NOTEZ-LE : il sert pour DATABASE_URL.
+    (Oublié ? Project Settings > Database > Reset database password.)
+A2. Attendez la fin de la création du projet (1 à 2 minutes).
+A3. Créer l'espace de stockage des photos/vidéos :
+    menu de gauche « Storage » > « New bucket » > nom : boutique
+    > activez « Public bucket » > « Create ».
+A4. Récupérer SUPABASE_URL :
+    « Project Settings » (roue dentée) > « Data API » (ou « API »)
+    > copiez « Project URL » : https://xxxxxxxx.supabase.co
+A5. Récupérer SUPABASE_SERVICE_KEY :
+    « Project Settings » > « API Keys ». Copiez la clé SECRÈTE :
+    « Secret key » (sb_secret_...) ou, dans l'onglet « Legacy API keys »,
+    la clé « service_role ». Ne la montrez à personne et ne la mettez
+    jamais dans GitHub. (Si l'envoi de photos échoue avec une des deux, essayez l'autre.)
+A6. Récupérer DATABASE_URL :
+    cliquez sur le bouton « Connect » en haut du projet > « Connection string »
+    > Type : URI > Method : « Session pooler » > copiez la ligne
+    postgresql://postgres.xxxx:[YOUR-PASSWORD]@aws-0-....pooler.supabase.com:5432/postgres
+    Remplacez [YOUR-PASSWORD] (avec les crochets) par le mot de passe de l'étape A1.
+    Important : prenez bien « Session pooler » (la connexion « Direct » ne
+    marche pas depuis Render gratuit).
+
+=== ÉTAPE B - GITHUB (github.com) ===
+B1. Créez un compte puis « New repository » : nom lia-shop, cochez « Private ».
+B2. Sur la page du dépôt : « uploading an existing file » (ou Add file > Upload files).
+    Glissez TOUT le contenu du dossier du site (server.py, requirements.txt,
+    LISEZMOI.txt, dossier static/ avec ses images...). NE METTEZ PAS le fichier .env.
+    Cliquez « Commit changes ».
+
+=== ÉTAPE C - RENDER (render.com) ===
+C1. Créez un compte (connectez-le à GitHub quand il le propose).
+C2. « New + » > « Web Service » > choisissez le dépôt lia-shop > « Connect ».
+C3. Remplissez :
+      Name            : lia-shop   (donne l'adresse lia-shop.onrender.com)
+      Region          : Frankfurt (la plus proche du Bénin)
+      Branch          : main
+      Runtime/Language: Python 3
+      Build Command   : pip install -r requirements.txt
+      Start Command   : python server.py
+      Instance Type   : Free
+C4. Section « Environment Variables » > « Add Environment Variable ».
+    AJOUTEZ EXACTEMENT CES 5 VARIABLES :
+
+    ADMIN_PASSWORD        Le mot de passe de votre admin (10 caractères
+                          minimum). Vous le choisissez. Utilisé au premier
+                          démarrage ; ensuite vous pouvez le changer dans l'admin.
+    DATABASE_URL          La chaîne de l'étape A6 (Session pooler) avec votre
+                          mot de passe à la place de [YOUR-PASSWORD].
+    SUPABASE_URL          L'adresse de l'étape A4 (https://xxxx.supabase.co),
+                          sans « / » à la fin.
+    SUPABASE_SERVICE_KEY  La clé secrète de l'étape A5.
+    SUPABASE_BUCKET       boutique   (le nom du bucket de l'étape A3)
+
+    Variables facultatives :
+    PYTHON_VERSION        3.12.3  (seulement si la construction échoue à cause de la version de Python)
+    RESET_ADMIN           1 (SEULEMENT si vous avez oublié le mot de passe : mettez-la avec un nouvel
+                          ADMIN_PASSWORD, redéployez, connectez-vous, puis SUPPRIMEZ cette variable)
+    Vous n'avez pas besoin de définir PORT : Render le fait.
+
+C5. Cliquez « Create Web Service ». Attendez « Live » dans l'onglet Logs.
+    Vous devez voir : « Mot de passe admin enregistré. »
+C6. Adresse du site : https://lia-shop.onrender.com   Admin : /admin
+
+=== ÉTAPE D - PREMIER TEST ===
+1. Ouvrez /admin, connectez-vous avec ADMIN_PASSWORD.
+2. « Ma boutique » : vérifiez les textes, les logos, enregistrez.
+3. « Articles » : supprimez les articles d'exemple et ajoutez les vôtres avec photos.
+4. Sur le site, passez une commande test, lancez la livraison dans l'admin,
+   saisissez le code côté client : le reçu doit apparaître.
+
+---------------------------------------------------------------------
+METTRE À JOUR LE SITE
+---------------------------------------------------------------------
+Remplacez les fichiers modifiés sur GitHub : Render redéploie tout seul.
+Vos articles, commandes et photos sont dans Supabase : ils ne disparaissent pas.
+
+---------------------------------------------------------------------
+LIMITES DE L'OFFRE GRATUITE
+---------------------------------------------------------------------
+- Render gratuit s'endort après 15 min sans visite : la première visite met
+  quelques secondes. Pour l'éviter, un service gratuit comme UptimeRobot peut
+  appeler https://lia-shop.onrender.com/healthz toutes les 5 minutes.
+- Supabase gratuit met le projet en pause après une semaine sans activité
+  (bouton « Restore » dans leur tableau de bord). Vérifiez les limites actuelles sur leur site.
+- Photos et vidéos : elles sont réduites automatiquement. Vidéo : 50 Mo maximum.
+
+---------------------------------------------------------------------
+PROBLÈMES FRÉQUENTS
+---------------------------------------------------------------------
+« ERREUR : définissez la variable ADMIN_PASSWORD »  -> variable absente ou trop courte.
+Le site ne démarre pas, erreur de connexion base  -> DATABASE_URL : prenez « Session
+   pooler », vérifiez le mot de passe (lettres/chiffres), enlevez les crochets.
+« Envoi vers le stockage impossible »             -> SUPABASE_URL ou clé fausse, ou bucket
+   non créé / nom différent de SUPABASE_BUCKET.
+Les images ne s'affichent pas                     -> le bucket n'est pas « Public ».
+Admin : « Trop d'essais »                         -> attendez 5 minutes.
+
+---------------------------------------------------------------------
+SÉCURITÉ INCLUSE
+---------------------------------------------------------------------
+Mot de passe haché, sessions stockées en base et à durée limitée, cookie sécurisé,
+limitation des essais (connexion, commande, suivi, confirmation), contrôle de
+l'origine des requêtes, en-têtes de sécurité (CSP, anti-clic-jacking, HTTPS strict),
+validation et nettoyage de toutes les entrées, formats de fichiers vérifiés.
+Conseils : mot de passe long et unique, ne jamais partager la clé SUPABASE_SERVICE_KEY.
