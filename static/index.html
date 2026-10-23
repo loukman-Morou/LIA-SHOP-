@@ -2,8 +2,8 @@
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>LIA SHOP</title><link rel="icon" href="/static/img/logo_intro.webp">
 <style>
-:root{--bg:#ffeef3;--card:rgba(255,250,251,.82);--tx:#3b1d27;--mu:#8c6671;--ac:#d6457a;--ln:rgba(214,69,122,.22);--g:rgba(255,255,255,.4);--gb:rgba(214,69,122,.45);--gh:rgba(214,69,122,.88);--ht:#fff;--hb:rgba(38,14,24,.88);--sh:rgba(0,0,0,.2)}
-[data-t=nuit]{--bg:#121212;--card:rgba(30,30,30,.82);--tx:#f1ece2;--mu:#a39d90;--ac:#c8f169;--ln:rgba(255,255,255,.13);--g:rgba(255,255,255,.06);--gb:rgba(200,241,105,.35);--gh:rgba(200,241,105,.9);--ht:#121212;--hb:rgba(8,8,8,.86)}
+:root{--bg:#ffeef3;--card:rgba(255,250,251,.82);--tx:#3b1d27;--mu:#8c6671;--ac:#d6457a;--ln:rgba(214,69,122,.22);--g:rgba(255,255,255,.4);--gb:rgba(214,69,122,.45);--gh:rgba(214,69,122,.88);--ht:#fff;--hb:rgba(38,14,24,.96);--sh:rgba(0,0,0,.2)}
+[data-t=nuit]{--bg:#121212;--card:rgba(30,30,30,.82);--tx:#f1ece2;--mu:#a39d90;--ac:#c8f169;--ln:rgba(255,255,255,.13);--g:rgba(255,255,255,.06);--gb:rgba(200,241,105,.35);--gh:rgba(200,241,105,.9);--ht:#121212;--hb:rgba(8,8,8,.95)}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}html{background:var(--bg);scroll-behavior:smooth;-webkit-text-size-adjust:100%}html.lock{overflow:hidden}
 body{font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--tx);overflow-x:hidden;min-height:100vh}
 button,input,select,textarea{font:inherit;color:inherit}img,video{max-width:100%}
@@ -27,9 +27,9 @@ header>div{display:flex;gap:.4em}header .btn{padding:.5em 1em}
 .hero #hd{position:relative;z-index:2;padding:1em 1em 12vh;opacity:0}.go .hero #hd{animation:fd 1s .3s both cubic-bezier(.2,.9,.2,1)}
 .hero p{margin:0 0 1.1em;font-size:1.15em;font-weight:500;text-shadow:0 2px 12px #0008;color:#fff}@keyframes fd{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
 .wrap{max-width:1200px;margin:auto;padding:0 4%}h2{margin:0 0 .6em;font-size:1.5em}
-.how{padding:2.2em 0 .5em}.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8em}
+.how{padding:2.2em 4% .5em}.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8em}
 .st{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:1em;transition:transform .3s}.st:hover{transform:translateY(-4px)}.st i{font-style:normal;font-size:1.6em}.st b{display:block;margin:.2em 0}.st p{color:var(--mu);font-size:.93em}
-.note{margin-top:.9em;color:var(--mu);font-size:.95em}
+.note{margin-top:1em;color:#000;text-align:center;font-size:.98em;font-weight:500}[data-t=nuit] .note{color:#f1ece2}a{text-decoration:none}
 main{padding:1.6em 0 3em}.bar{display:flex;gap:.5em;flex-wrap:wrap}.bar input,.bar select{flex:1 1 200px;min-width:0;padding:.6em 1.1em;min-height:44px;border:1px solid var(--ln);border-radius:99px;background:var(--card);font-size:16px}
 .chips{display:flex;gap:.45em;overflow-x:auto;padding:.2em 0 .4em;margin-top:.6em;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
 .chip{flex:none;padding:.45em 1.1em;border:1px solid var(--gb);border-radius:99px;background:var(--g);cursor:pointer;transition:.3s}.chip:hover,.chip.on{background:var(--gh);color:var(--ht)}
@@ -41,23 +41,29 @@ main{padding:1.6em 0 3em}.bar{display:flex;gap:.5em;flex-wrap:wrap}.bar input,.b
 .card .t{padding:.8em;display:flex;flex-direction:column;gap:.15em;flex:1}.card small{color:var(--mu)}.card h3{font-size:1rem;font-weight:600;line-height:1.3}.price{color:var(--ac);font-weight:700}
 .ca{display:grid;gap:.4em;margin-top:auto;padding-top:.6em}.out{opacity:.65}.tag{position:absolute;top:.5em;left:.5em;font-size:.72em;background:var(--ac);color:var(--ht);padding:.15em .65em;border-radius:9px}.tag.v{left:auto;right:.5em}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:50;display:grid;place-items:center;padding:1em;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}.modal.on{opacity:1;visibility:visible}
-.box{background:var(--bg);border:1px solid var(--ln);border-radius:24px;max-width:980px;width:100%;max-height:92vh;max-height:92dvh;overflow:auto;overscroll-behavior:contain;padding:1.2em;position:relative;transform:translateY(40px) scale(.95);transition:transform .45s cubic-bezier(.2,.9,.2,1)}.modal.on .box{transform:none}
+.box{background:var(--bg);border:1px solid var(--ln);border-radius:24px;max-width:980px;width:100%;max-height:92vh;max-height:92dvh;overflow:auto;overscroll-behavior:contain;overflow-x:hidden;padding:1.2em;position:relative;transform:translateY(40px) scale(.95);transition:transform .45s cubic-bezier(.2,.9,.2,1)}.modal.on .box{transform:none}
 .x{position:sticky;top:0;float:right;z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid var(--ln);background:var(--card);font-size:1.5em;line-height:1;cursor:pointer;margin:-.3em -.3em 0 0}
-.pg{display:grid;gap:1.2em;clear:both}@media(min-width:780px){.pg{grid-template-columns:1.1fr 1fr}}
-.main{position:relative;aspect-ratio:1;border-radius:18px;overflow:hidden;background:var(--card);display:grid;place-items:center;touch-action:pan-y}.main img,.main video{width:100%;height:100%;object-fit:contain;display:block;background:transparent}
-.ar{position:absolute;top:50%;transform:translateY(-50%);z-index:4;width:44px;padding:0}.ar.l{left:.4em}.ar.r{right:.4em}
-.th{display:flex;gap:.5em;margin-top:.6em;overflow-x:auto;padding-bottom:.3em;scrollbar-width:thin}.tb{position:relative;flex:none;width:68px;height:68px;border-radius:12px;overflow:hidden;border:2px solid transparent;padding:0;background:var(--card);cursor:pointer;transition:.25s}
+.pg{display:grid;grid-template-columns:minmax(0,1fr);gap:1.2em;clear:both}.pg>*{min-width:0}@media(min-width:780px){.pg{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}}
+.main{position:relative;aspect-ratio:1;border-radius:18px;overflow:hidden;background:var(--card);touch-action:pan-y}.main img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;cursor:zoom-in}.main.v{aspect-ratio:auto;background:#000}.main.v video{position:static;display:block;width:100%;height:auto;min-height:200px;max-height:70vh;max-height:70dvh;object-fit:contain}
+.ar{position:absolute;top:42%;transform:translateY(-50%);z-index:4;width:40px;min-height:40px;padding:0;opacity:.9}.ar.l{left:.4em}.ar.r{right:.4em}
+.th{display:flex;gap:.5em;margin-top:.7em;overflow-x:auto;padding:.2em .1em .4em;scrollbar-width:thin;max-width:100%;justify-content:safe center}.tb{position:relative;flex:none;width:68px;height:68px;border-radius:12px;overflow:hidden;border:2px solid transparent;padding:0;background:var(--card);cursor:pointer;transition:.25s}
 .tb img{width:100%;height:100%;object-fit:cover;display:block}.tb.on{border-color:var(--ac);transform:translateY(-3px)}.tb u{position:absolute;inset:0;display:grid;place-items:center;color:#fff;background:#0005;text-decoration:none;font-size:1.3em}
 table{width:100%;border-collapse:collapse;margin:.6em 0}td{padding:.45em .3em;border-bottom:1px solid var(--ln);vertical-align:top}td:first-child{color:var(--mu);width:38%}
 .f{display:grid;gap:.6em;margin:.8em 0}.f input,.f textarea{width:100%;padding:.75em;min-height:46px;border:1px solid var(--ln);border-radius:14px;background:var(--card);font-size:16px}
-.cl{display:grid;grid-template-columns:auto 58px 1fr;gap:.3em .7em;align-items:center;padding:.7em .2em;border-bottom:1px solid var(--ln)}.cl.off{opacity:.55}.cl img{width:58px;height:58px;object-fit:cover;border-radius:12px}
-.ci{min-width:0}.ci b{display:block;overflow-wrap:anywhere}.ci small{color:var(--mu)}.cp{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:.5em}
-.q{display:inline-flex;align-items:center;gap:.5em;margin-top:.2em}.q b{min-width:1.4em;text-align:center}.ck input{width:24px;height:24px;accent-color:var(--ac)}
 .tot{display:flex;justify-content:space-between;gap:1em;font-size:1.2em;margin:.8em 0 .2em}.row{display:flex;justify-content:space-between;gap:1em;padding:.4em 0;border-bottom:1px solid var(--ln)}
 .sec{background:var(--card);border:1px solid var(--ln);border-radius:20px;padding:1.2em;margin-top:1.6em}.sec .f{grid-template-columns:1fr}.bt{display:flex;gap:.5em;flex-wrap:wrap}.bt .btn{flex:1 1 150px}
 .stt{padding:.8em 1em;border-radius:14px;background:var(--card);border-left:4px solid var(--ac);margin:.6em 0}
 footer{text-align:center;padding:2em 1em;color:#f6d7e2;background:var(--hb);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--ln)}footer .fq{margin:.7em auto 1em;max-width:520px;font-style:italic;opacity:.9}footer a{color:var(--ac);margin:.3em .6em;text-decoration:none;font-weight:600;display:inline-block}
-#toast{position:fixed;left:50%;bottom:max(1.2em,env(safe-area-inset-bottom));transform:translate(-50%,30px);background:var(--ac);color:var(--ht);padding:.7em 1.3em;border-radius:99px;z-index:90;opacity:0;pointer-events:none;transition:.35s;font-weight:600;max-width:90vw;text-align:center}#toast.on{opacity:1;transform:translate(-50%,0)}
+#toast{position:fixed;left:50%;top:calc(76px + env(safe-area-inset-top));width:max-content;transform:translate(-50%,-20px);background:var(--ac);color:var(--ht);padding:.7em 1.3em;border-radius:99px;z-index:90;opacity:0;pointer-events:none;transition:.35s;font-weight:600;max-width:90vw;text-align:center;box-shadow:0 8px 24px #0004}#toast.on{opacity:1;transform:translate(-50%,0)}
+.cl{display:grid;grid-template-columns:auto 56px minmax(0,1fr) auto;gap:.2em .7em;align-items:center;padding:.8em .1em;border-bottom:1px solid var(--ln)}.cl.off{opacity:.55}.cl img{width:56px;height:56px;object-fit:cover;border-radius:12px}
+.ci{min-width:0}.ci b{display:block;overflow-wrap:break-word;line-height:1.25}.ci small{color:var(--mu);display:block}.ci .price{display:block;margin-top:.15em}
+.cr{display:flex;flex-direction:column;align-items:flex-end;gap:.5em}.q{display:inline-flex;align-items:center;gap:.35em}.q b{min-width:1.5em;text-align:center}.q .btn{min-width:36px;padding:.2em 0}.ck input{width:24px;height:24px;accent-color:var(--ac)}
+.btn.rd{background:#d32f2f;color:#fff;border-color:#d32f2f}.btn.rd:hover{background:#b71c1c;color:#fff}.btn.wa{background:#1fa855;color:#fff;border-color:#1fa855}.btn.wa:hover{background:#178a45;color:#fff}
+.hd{text-align:center}.hd small{color:var(--mu);letter-spacing:.06em;text-transform:uppercase}.hd h2{margin:.15em 0 .2em;font-size:1.55em;line-height:1.25}.hd .price{font-size:1.7em;margin:.1em 0}.hd .stk{color:var(--mu);font-size:.95em}
+.blk{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:.8em 1em;margin:.8em 0;line-height:1.65}.blk h4{font-size:.8em;text-transform:uppercase;letter-spacing:.08em;color:var(--mu);margin-bottom:.4em}
+.act{display:grid;gap:.6em;margin-top:.9em}.act a{display:block}.act .btn{width:100%}
+#lb{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.94);display:none;place-items:center}#lb.on{display:grid}#lb img{max-width:100vw;max-height:100vh;max-height:100dvh;object-fit:contain}
+#lb .x2{position:absolute;top:max(.8em,env(safe-area-inset-top));right:.8em;width:46px;height:46px;border-radius:50%;border:1px solid #fff5;background:#0008;color:#fff;font-size:1.6em;line-height:1}
 @media(max-width:700px){
  .brand .lg{height:36px}header .btn{padding:.45em .85em;font-size:.9em}.hero{min-height:380px}.hero p{font-size:1.02em}
  .grid{grid-template-columns:repeat(2,1fr);gap:.6em}.card .t{padding:.6em}.card h3{font-size:.92rem}.btn.s,.card .btn{font-size:.85em;padding:.5em .6em}
@@ -77,19 +83,20 @@ footer{text-align:center;padding:2em 1em;color:#f6d7e2;background:var(--hb);-web
 <div class="st"><i>✅</i><b>Choisir quoi payer</b><p>Cochez un seul article, plusieurs, ou tout le panier.</p></div>
 <div class="st"><i>🚚</i><b>Commander</b><p>Indiquez votre lieu de livraison et payez à la réception. Vous recevez un code.</p></div>
 <div class="st"><i>🧾</i><b>Suivre et recevoir</b><p>Suivez votre commande avec le code, confirmez la réception, téléchargez votre reçu.</p></div></div>
-<p class="note">Une question ? Écrivez-nous sur WhatsApp, Instagram ou TikTok (en bas de page). Le bouton ☾ / ☀ change le thème clair ou nuit.</p></section>
+<p class="note">Une question ? Écrivez-nous sur WhatsApp, Instagram ou TikTok (en bas de page).</p></section>
 <main id="cat" class="wrap"><h2>La collection</h2><div class="bar"><input id="q" placeholder="Rechercher un article" maxlength="40" oninput="draw()"><select id="so" onchange="draw()"><option value="">Plus récents</option><option value="a">Prix croissant</option><option value="d">Prix décroissant</option></select></div>
 <div class="chips" id="chips"></div><div class="grid" id="grid"></div>
 <div class="sec rv" id="suivi"><h2 style="margin-top:0">Ma commande</h2><p style="color:var(--mu)">Entrez le code reçu à la commande. « Suivre » montre où en est votre colis. « J'ai reçu mon colis » se clique seulement quand le colis est dans vos mains : votre reçu devient alors disponible.</p>
 <div class="f"><input id="cc" placeholder="Code (6 caractères)" maxlength="12" autocapitalize="characters" autocomplete="off"><div class="bt"><button class="btn" onclick="trk()">Suivre ma commande</button><button class="btn p" onclick="conf()">J'ai reçu mon colis</button></div></div><div id="ts"></div></div></main>
 <footer id="ft"></footer>
-<div class="modal" id="m" onclick="event.target==this&&cl()"><div class="box"><button class="x" onclick="cl()" aria-label="Fermer">×</button><div id="mb"></div></div></div><div id="toast"></div>
+<div class="modal" id="m" onclick="event.target==this&&cl()"><div class="box"><button class="x" onclick="cl()" aria-label="Fermer">×</button><div id="mb"></div></div></div><div id="lb" onclick="lbx()"></div><div id="toast"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const $=i=>document.getElementById(i),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let S={},P=[],cat="",M=[],mi=0,mopen=false,F={n:"",t:"",a:""},recolor=()=>{};
 let C=(()=>{try{return JSON.parse(localStorage.cart||"[]").map(x=>({id:+x.id,qty:Math.max(1,+x.qty||1),sel:x.sel!==false}))}catch(e){return[]}})();
 const fm=n=>Number(n).toLocaleString("fr-FR")+" "+S.currency,pr=id=>P.find(p=>p.id==id);
+const FB=u=>isV(u)?`onerror="this.style.visibility='hidden'"`:`onerror="this.onerror=null;this.src='${esc(u)}'"`;
 const TH=u=>/\/[0-9a-f]{16}\.(webp|mp4|webm)$/.test(u)?u.replace(/\.(webp|mp4|webm)$/,"_t.webp"):u,isV=u=>/\.(mp4|webm)$/i.test(u),U=u=>`url('${esc(u)}')`;
 function th(){const n=document.documentElement.dataset.t=="nuit"?"":"nuit";document.documentElement.dataset.t=n;localStorage.t=n;recolor()}
 document.documentElement.dataset.t=localStorage.t||(matchMedia("(prefers-color-scheme:dark)").matches?"nuit":"");
@@ -122,23 +129,24 @@ async function init(){let r;try{r=await(await fetch("/api/public")).json()}catch
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("on");io.unobserve(e.target)}}),{threshold:.08});
 function rvo(){document.querySelectorAll(".rv:not(.on)").forEach((e,i)=>{e.style.transitionDelay=Math.min(i%4,3)*.07+"s";io.observe(e)})}
 function draw(){let l=P.filter(p=>(!cat||p.cat==cat)&&p.name.toLowerCase().includes($("q").value.toLowerCase().slice(0,40)));const s=$("so").value;if(s)l.sort((a,b)=>s=="a"?a.price-b.price:b.price-a.price);
- $("grid").innerHTML=l.map(p=>`<article class="card rv ${p.stock<1?"out":""}"><div class="im" onclick="show(${p.id})">${p.images[0]?`<img loading="lazy" decoding="async" src="${esc(TH(p.images[0]))}" alt="${esc(p.name)}">`:""}${p.stock<1?'<span class="tag">Épuisé</span>':""}${p.videos.length?'<span class="tag v">▶ Vidéo</span>':""}</div>
+ $("grid").innerHTML=l.map(p=>`<article class="card rv ${p.stock<1?"out":""}"><div class="im" onclick="show(${p.id})">${p.images[0]?`<img loading="lazy" decoding="async" src="${esc(TH(p.images[0]))}" ${FB(p.images[0])} alt="${esc(p.name)}">`:""}${p.stock<1?'<span class="tag">Épuisé</span>':""}${p.videos.length?'<span class="tag v">▶ Vidéo</span>':""}</div>
  <div class="t"><small>${esc(p.cat)}</small><h3>${esc(p.name)}</h3><span class="price">${fm(p.price)}</span><div class="ca"><button class="btn" onclick="show(${p.id})">Voir les détails</button><button class="btn p" onclick="add(${p.id})" ${p.stock<1?"disabled":""}>+ Ajouter au panier</button></div></div></article>`).join("")||"<p>Aucun article trouvé.</p>";rvo()}
 function op(h){$("mb").innerHTML=h;$("m").classList.add("on");document.documentElement.classList.add("lock");mopen=true;$("m").querySelector(".box").scrollTop=0}
 function cl(){$("m").classList.remove("on");document.documentElement.classList.remove("lock");mopen=false;setTimeout(()=>{if(!mopen)$("mb").innerHTML=""},400)}
 /* Fiche article : grande photo + vues en dessous */
 function show(id){const p=pr(id);if(!p)return;M=[...p.images,...p.videos];mi=0;const ds=(p.details||"").split("\n").filter(x=>x.trim()),rows=ds.filter(x=>x.includes(":")),txt=ds.filter(x=>!x.includes(":"));
- op(`<div class="pg"><div><div class="main" id="mm"></div>${M.length>1?`<div class="th" id="th">${M.map((u,i)=>`<button class="tb" onclick="sm(${i})" aria-label="Vue ${i+1}"><img src="${esc(TH(u))}" alt="" loading="lazy">${isV(u)?"<u>▶</u>":""}</button>`).join("")}</div>`:""}</div>
- <div><small style="color:var(--mu)">${esc(p.cat)}</small><h2 style="margin:0">${esc(p.name)}</h2><p class="price" style="font-size:1.5em">${fm(p.price)}</p><p>${esc(p.desc)}</p>
- ${rows.length?`<table>${rows.map(x=>{const k=x.indexOf(":");return`<tr><td>${esc(x.slice(0,k))}</td><td>${esc(x.slice(k+1))}</td></tr>`}).join("")}</table>`:""}${txt.map(x=>`<p>${esc(x)}</p>`).join("")}
- <p style="margin:.6em 0;color:var(--mu)">${p.stock>0?p.stock+" en stock":"<b>Épuisé</b>"}</p><div class="bt">${p.stock>0?`<button class="btn p" id="ab" onclick="add(${p.id},1)">Ajouter au panier</button>`:""}
- <a style="flex:1 1 150px;display:flex" href="https://wa.me/${esc(S.whatsapp)}?text=${encodeURIComponent("Bonjour, je suis intéressé(e) par : "+p.name)}"><button class="btn" style="flex:1">Demander sur WhatsApp</button></a></div></div></div>`);sm(0);
- let x0=null;const mm=$("mm");mm.ontouchstart=e=>x0=e.touches[0].clientX;mm.ontouchend=e=>{if(x0===null||M.length<2)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)sm(mi+(d<0?1:-1));x0=null}}
-function sm(i){M.length&&(mi=(i+M.length)%M.length);const u=M[mi],mm=$("mm");if(!mm)return;
- mm.innerHTML=(isV(u)?`<video src="${esc(u)}" poster="${esc(TH(u))}" controls playsinline preload="metadata"></video>`:`<img src="${esc(u)}" alt="" decoding="async">`)+(M.length>1?`<button class="btn ar l" onclick="sm(mi-1)" aria-label="Précédent">‹</button><button class="btn ar r" onclick="sm(mi+1)" aria-label="Suivant">›</button>`:"");
+ op(`<div class="pg"><div><div class="main" id="mm"></div>${M.length>1?`<div class="th" id="th">${M.map((u,i)=>`<button class="tb" onclick="sm(${i},1)" aria-label="Vue ${i+1}"><img src="${esc(TH(u))}" ${FB(u)} alt="" loading="lazy">${isV(u)?"<u>▶</u>":""}</button>`).join("")}</div>`:""}</div>
+ <div class="inf"><div class="hd"><small>${esc(p.cat)}</small><h2>${esc(p.name)}</h2><p class="price">${fm(p.price)}</p><p class="stk">${p.stock>0?"✔ "+p.stock+" en stock":"<b>Épuisé</b>"}</p></div>
+ ${p.desc?`<div class="blk"><h4>Description</h4><p>${esc(p.desc)}</p></div>`:""}
+ ${rows.length||txt.length?`<div class="blk"><h4>Caractéristiques</h4>${rows.length?`<table>${rows.map(x=>{const k=x.indexOf(":");return`<tr><td>${esc(x.slice(0,k))}</td><td>${esc(x.slice(k+1))}</td></tr>`}).join("")}</table>`:""}${txt.map(x=>`<p>${esc(x)}</p>`).join("")}</div>`:""}
+ <div class="act">${p.stock>0?`<button class="btn p" id="ab" onclick="add(${p.id},1)">Ajouter au panier</button>`:""}<a href="https://wa.me/${esc(S.whatsapp)}?text=${encodeURIComponent("Bonjour, je suis intéressé(e) par : "+p.name)}"><button class="btn wa">Demander sur WhatsApp</button></a></div></div></div>`);sm(0);
+ let x0=null;const mm=$("mm");mm.ontouchstart=e=>x0=e.touches[0].clientX;mm.ontouchend=e=>{if(x0===null||M.length<2)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)sm(mi+(d<0?1:-1),1);x0=null}}
+function sm(i,play){M.length&&(mi=(i+M.length)%M.length);const u=M[mi],mm=$("mm");if(!mm)return;mm.className="main"+(isV(u)?" v":"");
+ mm.innerHTML=(isV(u)?`<video src="${esc(u)}" poster="${esc(TH(u))}" controls playsinline preload="auto" ${play?"autoplay":""}></video>`:`<img src="${esc(u)}" alt="" decoding="async" onclick="lbo()">`)+(M.length>1?`<button class="btn ar l" onclick="sm(mi-1,1)" aria-label="Précédent">‹</button><button class="btn ar r" onclick="sm(mi+1,1)" aria-label="Suivant">›</button>`:"");
  document.querySelectorAll(".tb").forEach((t,k)=>{t.classList.toggle("on",k==mi);if(k==mi)t.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"})});
  const n=M[(mi+1)%M.length];if(n&&!isV(n))new Image().src=n}
-addEventListener("keydown",e=>{if(!mopen)return;if(e.key=="Escape")cl();if($("mm")&&e.key=="ArrowRight")sm(mi+1);if($("mm")&&e.key=="ArrowLeft")sm(mi-1)});
+function lbo(){const l=$("lb");l.innerHTML=`<img src="${esc(M[mi])}" alt=""><button class="x2" aria-label="Fermer">×</button>`;l.classList.add("on")}function lbx(){$("lb").classList.remove("on")}
+addEventListener("keydown",e=>{if(!mopen)return;if(e.key=="Escape"){if($("lb").classList.contains("on"))return lbx();cl()}if($("mm")&&e.key=="ArrowRight")sm(mi+1,1);if($("mm")&&e.key=="ArrowLeft")sm(mi-1,1)});
 /* Panier : chaque article est séparé, on choisit ce qu'on paye */
 function sv(){localStorage.cart=JSON.stringify(C);$("cn").textContent=C.reduce((a,b)=>a+b.qty,0)}
 function add(id,inm){const p=pr(id),l=C.find(x=>x.id==id);if(!p||p.stock<1)return;if(l){if(l.qty<p.stock)l.qty++;else return toast("Stock maximum atteint")}else C.push({id,qty:1,sel:true});sv();toast("Ajouté au panier ✓");
@@ -149,8 +157,8 @@ function cart(keep){C=C.filter(c=>pr(c.id));const ch=C.filter(c=>c.sel),tot=ch.r
  if(!C.length)return op(`<h2>Mon panier</h2><p>Votre panier est vide.</p><button class="btn p" onclick="cl()">Continuer mes achats</button>`);
  const h=`<h2>Mon panier</h2><p style="color:var(--mu);margin-bottom:.4em">Cochez les articles que vous voulez payer maintenant. Les autres restent dans votre panier.</p>
  <div class="bt" style="margin-bottom:.4em"><button class="btn s" onclick="selall(true)">Tout cocher</button><button class="btn s" onclick="selall(false)">Tout décocher</button></div>
- ${C.map(c=>{const p=pr(c.id);return`<div class="cl ${c.sel?"":"off"}"><label class="ck"><input type="checkbox" ${c.sel?"checked":""} onchange="sel(${p.id},this.checked)" aria-label="Payer cet article"></label><img src="${esc(TH(p.images[0]||""))}" alt=""><div class="ci"><b>${esc(p.name)}</b><small>${fm(p.price)} l'unité</small><div class="q"><button class="btn s" onclick="qty(${p.id},-1)" aria-label="Moins">−</button><b>${c.qty}</b><button class="btn s" onclick="qty(${p.id},1)" aria-label="Plus">+</button></div></div>
- <div class="cp"><b class="price">${fm(p.price*c.qty)}</b><button class="btn s" onclick="rm(${p.id})">Supprimer</button></div></div>`}).join("")}
+ ${C.map(c=>{const p=pr(c.id);return`<div class="cl ${c.sel?"":"off"}"><label class="ck"><input type="checkbox" ${c.sel?"checked":""} onchange="sel(${p.id},this.checked)" aria-label="Payer cet article"></label><img src="${esc(TH(p.images[0]||""))}" ${FB(p.images[0]||"")} alt=""><div class="ci"><b>${esc(p.name)}</b><small>${fm(p.price)} l'unité</small><span class="price">${fm(p.price*c.qty)}</span></div>
+ <div class="cr"><div class="q"><button class="btn s" onclick="qty(${p.id},-1)" aria-label="Moins">−</button><b>${c.qty}</b><button class="btn s" onclick="qty(${p.id},1)" aria-label="Plus">+</button></div><button class="btn s rd" onclick="rm(${p.id})">Supprimer</button></div></div>`}).join("")}
  <div class="tot"><span>À payer (${ch.length} article${ch.length>1?"s":""})</span><b class="price">${fm(tot)}</b></div><p style="color:var(--mu);font-size:.9em">Paiement à la livraison.</p>
  <div class="f"><input id="n" placeholder="Votre nom" maxlength="80" value="${esc(F.n)}" oninput="F.n=this.value" autocomplete="name"><input id="t" type="tel" placeholder="Téléphone" maxlength="20" value="${esc(F.t)}" oninput="F.t=this.value" autocomplete="tel"><textarea id="a" rows="2" placeholder="Lieu de livraison (quartier, repère)" maxlength="200" oninput="F.a=this.value">${esc(F.a)}</textarea>
  <button class="btn p" onclick="ord()" ${ch.length?"":"disabled"}>Commander la sélection</button></div>`;
